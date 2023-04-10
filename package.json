@@ -17,5 +17,6 @@
   },
     "resolutions": {
     "@types/node": "18.15.0"
-  }
+  },
+  "type": "module"
 }
