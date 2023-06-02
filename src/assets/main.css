@@ -14,14 +14,14 @@ body * {
 header {
   text-align: center;
   background: #e7e7e7;
-  padding-top: 20px;
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 header img {
-  max-width: 60px;
+  max-width: 70px;
   transform: rotate(-10deg);
 }
 
@@ -49,7 +49,8 @@ a,
 }
 
 /* task list */
-.task-list {
+.task-list,
+.fav-task-list {
   max-width: 640px;
   margin: 20px auto;
 }
@@ -78,4 +79,21 @@ a,
   margin-left: 6px;
   cursor: pointer;
   color: #bbb;
+}
+
+.filter {
+  width: 640px;
+  margin: 10px auto;
+  text-align: right;
+}
+
+.filter button {
+  display: inline-block;
+  margin-left: 10px;
+  background: #fff;
+  border: 2px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 1em;
 }
