@@ -6,6 +6,11 @@
       <h1>{{ taskStore.name }}</h1>
     </header>
 
+    <!-- new task form -->
+    <div class="new-task-form">
+      <TaskForm />
+    </div>
+
     <!-- filter list -->
     <nav class="filter">
       <button
@@ -56,6 +61,7 @@
 
 import { useTaskStore } from './stores/TaskStore'
 import TaskDetails from './components/TaskDetails.vue';
+import TaskForm from './components/TaskForm.vue'
 import { ref } from 'vue';
 
 const filter = ref()
