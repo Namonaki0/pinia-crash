@@ -1,12 +1,11 @@
 import { defineStore } from "pinia";
 
+const json_server_url = "http://localhost:3000/tasks";
+
 export const useTaskStore = defineStore("taskStore", {
   state: () => ({
-    tasks: [
-      { id: 1, title: "pay bill", isFav: true },
-      { id: 2, title: "get food", isFav: false },
-      { id: 3, title: "get key", isFav: true },
-    ],
+    tasks: [],
+    loading: false,
     name: "Pinia Crash Tasks",
   }),
   getters: {
@@ -23,17 +22,52 @@ export const useTaskStore = defineStore("taskStore", {
     },
   },
   actions: {
-    addTask(task) {
-      return this.tasks.push(task);
+    async getTasks() {
+      this.loading = true;
+
+      const res = await fetch(json_server_url);
+      const data = await res.json();
+
+      this.tasks = data;
+      this.loading = false;
     },
-    deleteTask(id) {
+    async addTask(task) {
+      this.tasks.push(task);
+
+      const res = await fetch(json_server_url, {
+        method: "POST",
+        body: JSON.stringify(task),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.error) console.error(res.error);
+    },
+    async deleteTask(id) {
       this.tasks = this.tasks.filter((task) => {
         return task.id !== id;
       });
+
+      const res = await fetch(`${json_server_url}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (res.error) console.error(res.error);
     },
-    toggleFav(id) {
+    async toggleFav(id) {
       const taskId = this.tasks.find((task) => task.id === id);
       taskId.isFav = !taskId.isFav;
+
+      const res = await fetch(`${json_server_url}/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ isFav: taskId.isFav }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.error) console.error(res.error);
     },
   },
 });
