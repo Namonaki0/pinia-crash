@@ -25,6 +25,13 @@
       </button>
     </nav>
 
+    <!-- loading -->
+    <div 
+      v-if="taskStore.loading"
+      class="loading">
+        Loading tasks...
+    </div>
+
     <!-- task list -->
         <div 
           v-if="filter === 'all'"
@@ -67,5 +74,9 @@ import { ref } from 'vue';
 const filter = ref()
 
 const taskStore = useTaskStore()
+
+// fetch tasks
+taskStore.getTasks();
+
 </script>
 
