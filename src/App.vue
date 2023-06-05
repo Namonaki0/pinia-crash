@@ -3,7 +3,7 @@
     <!-- heading -->
     <header>
       <img src="./assets/pinia-logo.svg" alt="pinia logo">
-      <h1>{{ taskStore.name }}</h1>
+      <h1>{{ name }}</h1>
     </header>
 
     <!-- new task form -->
@@ -27,8 +27,9 @@
 
     <!-- loading -->
     <div 
-      v-if="taskStore.loading"
-      class="loading">
+      v-if="loading"
+      class="loading"
+    >
         Loading tasks...
     </div>
 
@@ -37,12 +38,13 @@
           v-if="filter === 'all'"
           class="task-list"
         >
-        <p>You have {{ taskStore.totalTasks }} remaining tasks</p>
+        <p>You have {{ totalTasks }} remaining tasks</p>
           <div 
-            v-for="task, i in taskStore.tasks"
+            v-for="task, i in tasks"
             :key="`task-${i}`"
           >
-            <TaskDetails 
+            <TaskDetails
+              v-if="task"
               :task="task"
             />
           </div>
@@ -51,32 +53,42 @@
           v-else
           class="fav-task-list"
         >
-          <p>You have {{ taskStore.favCount }} favourite tasks</p>
+          <p>You have {{ favCount }} favourite tasks</p>
           <div 
-            v-for="task, i in taskStore.favs"
+            v-for="task, i in favs"
             :key="`task-${i}`"
           >
-            <TaskDetails 
+            <TaskDetails
+              v-if="task"
               :task="task"
             />
           </div>
         </div>
+
+        <button
+          @click.stop="taskStore.clearTasks"
+        >
+          Reset state
+        </button>
   </main>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 
 import { useTaskStore } from './stores/TaskStore'
 import TaskDetails from './components/TaskDetails.vue';
 import TaskForm from './components/TaskForm.vue'
-import { ref } from 'vue';
 
-const filter = ref()
+const filter = ref("all")
 
 const taskStore = useTaskStore()
 
 // fetch tasks
 taskStore.getTasks();
+
+const { tasks, loading, name, favs, favCount, totalTasks } = storeToRefs(taskStore)
 
 </script>
 
