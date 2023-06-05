@@ -69,5 +69,12 @@ export const useTaskStore = defineStore("taskStore", {
 
       if (res.error) console.error(res.error);
     },
+    clearTasks() {
+      this.tasks = this.tasks.map((task) => {
+        fetch(`${json_server_url}/${task.id}`, {
+          method: "DELETE",
+        });
+      });
+    },
   },
 });

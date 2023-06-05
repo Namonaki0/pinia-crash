@@ -1,24 +1,3 @@
 {
-  "tasks": [
-    {
-      "id": 1,
-      "title": "pay bill",
-      "isFav": true
-    },
-    {
-      "id": 2,
-      "title": "get food",
-      "isFav": true
-    },
-    {
-      "id": 3,
-      "title": "get key",
-      "isFav": false
-    },
-    {
-      "title": "new task",
-      "isFav": false,
-      "id": 5218
-    }
-  ]
+  "tasks": []
 }
